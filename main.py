@@ -56,7 +56,7 @@ def sign(school_id, password, auto_position, vaccine):
                 answer["填报日期(Date)"] = str(
                     datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=8))).date())
                 answer["自动定位(Automatic location)"] = auto_position
-                answer["疫苗接种情况?(Vaccination status?)"] = vaccine
+                answer["当前疫苗接种情况? (Vaccination status?)"] = vaccine
                 data = json.dumps({"examenSchemeId": 2, "examenTitle": "师生报平安", "answer": answer})
                 headers = {'Content-Type': 'application/json'}
                 url = "http://yqdj.zucc.edu.cn/feiyan_api/examen/examenAnswerController/commitAnswer.do"
@@ -97,5 +97,5 @@ def wechatNotice(SCKey, message):
 if __name__ == '__main__':
     msg = sign(os.environ["SCHOOL_ID"], os.environ["PASSWORD"], os.environ["AUTO_POSITION"], os.environ["VACCINE"])
     print(msg)
-    if os.environ["SCKEY"] != '' and msg != '打卡成功':
+    if os.environ["SCKEY"] != '' and msg == '打卡成功':
         wechatNotice(os.environ["SCKEY"], msg)
